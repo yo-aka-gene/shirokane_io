@@ -13,23 +13,27 @@ export SHIROKANE_ID=$your_user_id
 Make sure to replace `$your_user_id` with your actual SHIROKANE login ID,
 and update `$parent_dirs` to the absolute or relative path leading to the `shirokane_io` directory.
 
-### 2. Uploading a file/directory
-To upload a file from your local env, run:
-```terminal
+### 2. Uploading Files or Directories
+To upload a file to SHIROKANE:
+```bash
 to_shirokane $local_filename $remote_path
 ```
 
-and for a directory, run:
-```terminal
+To upload a directory, add the `-r` option:
+```bash
 to_shirokane -r $local_dirname $remote_path
 ```
 
-### 3. Downloading a file.directory
-To download a file from the remote env, the downloaded file will be stored in `shiorokane_io/download/$local_dirname` when you run the following:
-```terminal
+### 3. Downloading Files or Directories
+To download a remote file or directory, and store it under `shirokane_io/download/`:
+```bash
 from_shirokane $remote_filename $local_dirname
 ```
-Alternatively, you can download a file directly in `shiorokane_io/download` with:
-```terminal
+This will create:
+```bash
+shirokane_io/download/$local_dirname
+```
+To download into the base `download/` directory with the original filename:
+```bash
 from_shirokane $remote_filename .
 ```
