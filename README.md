@@ -1,39 +1,45 @@
 # shirokane_io
 Directory for managing data input/output between your local environment and SHIROKANE HPC.
 
-## Usage
-### 1. Setting
-Add the following lines to your `.zshrc`:
+## :wrench: Setup
+Add the following lines to your `.bashrc` or `.zshrc`:
 
 ```bash
 export SHIROKANE_ID=$your_user_id
 [ -f "$parent_dirs/shirokane_io/io.sh" ] && source "$parent_dirs/shirokane_io/io.sh"
 ```
-
 Make sure to replace `$your_user_id` with your actual SHIROKANE login ID,
-and update `$parent_dirs` to the absolute or relative path leading to the `shirokane_io` directory.
+and update `$parent_dirs` to the absolute or relative path leading to the `shirokane_io` directory.~
 
-### 2. Uploading Files or Directories
-To upload a file to SHIROKANE:
+## :rocket: Usage
+### :outbox_tray: `to_shirokane`
+Uploads files or directories to SHIROKANE:
 ```bash
-to_shirokane $local_filename $remote_path
+to_shirokane [scp_options] <local_path> <remote_path>
+```
+Example:
+```
+to_shirokane -r "~/results" results
 ```
 
-To upload a directory, add the `-r` option:
+### :inbox_tray: `from_shirokane`
+Download files or directories from SHIROKANE into `shirokane_io/download/`:
 ```bash
-to_shirokane -r $local_dirname $remote_path
+from_shirokane [scp_options] <remote_path> <local_name>
 ```
-
-### 3. Downloading Files or Directories
-To download a remote file or directory, and store it under `shirokane_io/download/`:
+Example:
 ```bash
-from_shirokane $remote_filename $local_dirname
+from_shirokane -r "~/project/data" my_data
 ```
-This will create:
+This will save the remote `~/project/data` into:
 ```bash
-shirokane_io/download/$local_dirname
+shirokane_io/download/my_data
 ```
-To download into the base `download/` directory with the original filename:
+To download a file into the base `download/` directory with the original filename:
 ```bash
-from_shirokane $remote_filename .
+from_shirokane "~/project/data.csv" .
 ```
+### :pushpin: Notes
+- Quoting `~` in in remote paths is required: use `"~/path"` instead of `~/path`
+- The download destination is automatically created under `shirokane_io/download/` for safety and organization.
+- `scp` options such as `-r` are fully supported.
