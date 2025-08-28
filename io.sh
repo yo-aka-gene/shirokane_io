@@ -46,7 +46,6 @@ from_shirokane () {
     local options=("${@:1:$(($#-2))}")
 
     mkdir -p "$(dirname "$local_path")"
-    echo "$(dirname "$local_path")"
 
     scp "${options[@]}" "${SHIROKANE_ID}@${host}:${remote_path}" "$local_path"
 }
